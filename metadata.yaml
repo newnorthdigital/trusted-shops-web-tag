@@ -1,0 +1,5 @@
+homepage: "https://github.com/newnorthdigital/trusted-shops-web-tag"
+documentation: "https://github.com/newnorthdigital/trusted-shops-web-tag/blob/main/README.md"
+versions:
+  - sha: REPLACE_WITH_COMMIT_SHA
+    changeNotes: "Initial release - Trusted Shops Trustbadge placement, shop review collection, and shop + product review collection."
