@@ -23,7 +23,7 @@ ___INFO___
     "displayName": "New North Digital",
     "thumbnail": ""
   },
-  "description": "Trusted Shops Trustbadge integration. Place the Trustbadge on all pages and collect shop and product reviews on the order confirmation page.",
+  "description": "Trusted Shops Trustbadge integration. Load the Trustbadge widget on all pages with configurable variant, position, and display options.",
   "containerContexts": [
     "WEB"
   ]
@@ -33,28 +33,6 @@ ___INFO___
 ___TEMPLATE_PARAMETERS___
 
 [
-  {
-    "type": "SELECT",
-    "name": "actionType",
-    "displayName": "Action type",
-    "macrosInSelect": false,
-    "selectItems": [
-      {
-        "value": "placeBadge",
-        "displayValue": "Place Trustbadge"
-      },
-      {
-        "value": "shopReviews",
-        "displayValue": "Collect shop reviews"
-      },
-      {
-        "value": "shopProductReviews",
-        "displayValue": "Collect shop and product reviews"
-      }
-    ],
-    "simpleValueType": true,
-    "help": "Select the action this tag should perform. Use separate tags for badge placement (all pages) and review collection (order confirmation)."
-  },
   {
     "type": "TEXT",
     "name": "trustedshopsId",
@@ -72,7 +50,7 @@ ___TEMPLATE_PARAMETERS___
     "type": "GROUP",
     "name": "badgeConfig",
     "displayName": "Badge Configuration",
-    "groupStyle": "ZIPPY_OPEN",
+    "groupStyle": "ZIPPY_CLOSED",
     "subParams": [
       {
         "type": "SELECT",
@@ -80,22 +58,10 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "Variant",
         "macrosInSelect": false,
         "selectItems": [
-          {
-            "value": "reviews",
-            "displayValue": "Reviews (default)"
-          },
-          {
-            "value": "default",
-            "displayValue": "Default"
-          },
-          {
-            "value": "custom",
-            "displayValue": "Custom"
-          },
-          {
-            "value": "custom_reviews",
-            "displayValue": "Custom with reviews"
-          }
+          { "value": "reviews", "displayValue": "Reviews (default)" },
+          { "value": "default", "displayValue": "Default" },
+          { "value": "custom", "displayValue": "Custom" },
+          { "value": "custom_reviews", "displayValue": "Custom with reviews" }
         ],
         "simpleValueType": true,
         "defaultValue": "reviews"
@@ -115,16 +81,8 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "help": "Required for custom and custom_reviews variants.",
         "enablingConditions": [
-          {
-            "paramName": "badgeVariant",
-            "paramValue": "custom",
-            "type": "EQUALS"
-          },
-          {
-            "paramName": "badgeVariant",
-            "paramValue": "custom_reviews",
-            "type": "EQUALS"
-          }
+          { "paramName": "badgeVariant", "paramValue": "custom", "type": "EQUALS" },
+          { "paramName": "badgeVariant", "paramValue": "custom_reviews", "type": "EQUALS" }
         ]
       },
       {
@@ -133,121 +91,14 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "Trustcard Direction",
         "macrosInSelect": false,
         "selectItems": [
-          {
-            "value": "",
-            "displayValue": "Auto"
-          },
-          {
-            "value": "topRight",
-            "displayValue": "Top Right"
-          },
-          {
-            "value": "topLeft",
-            "displayValue": "Top Left"
-          },
-          {
-            "value": "bottomRight",
-            "displayValue": "Bottom Right"
-          },
-          {
-            "value": "bottomLeft",
-            "displayValue": "Bottom Left"
-          }
+          { "value": "", "displayValue": "Auto" },
+          { "value": "topRight", "displayValue": "Top Right" },
+          { "value": "topLeft", "displayValue": "Top Left" },
+          { "value": "bottomRight", "displayValue": "Bottom Right" },
+          { "value": "bottomLeft", "displayValue": "Bottom Left" }
         ],
         "simpleValueType": true,
         "defaultValue": ""
-      }
-    ],
-    "enablingConditions": [
-      {
-        "paramName": "actionType",
-        "paramValue": "placeBadge",
-        "type": "EQUALS"
-      }
-    ]
-  },
-  {
-    "type": "GROUP",
-    "name": "orderData",
-    "displayName": "Order Data",
-    "groupStyle": "ZIPPY_OPEN",
-    "subParams": [
-      {
-        "type": "TEXT",
-        "name": "orderNumber",
-        "displayName": "Order Number",
-        "simpleValueType": true,
-        "help": "Unique order number or timestamp."
-      },
-      {
-        "type": "TEXT",
-        "name": "buyerEmail",
-        "displayName": "Buyer Email",
-        "simpleValueType": true,
-        "help": "Customer email address for review invitation."
-      },
-      {
-        "type": "TEXT",
-        "name": "orderAmount",
-        "displayName": "Order Amount",
-        "simpleValueType": true,
-        "help": "Order total (e.g., 150.00)."
-      },
-      {
-        "type": "TEXT",
-        "name": "orderCurrency",
-        "displayName": "Currency",
-        "simpleValueType": true,
-        "defaultValue": "EUR",
-        "help": "ISO currency code (EUR, GBP, USD, etc.)."
-      },
-      {
-        "type": "TEXT",
-        "name": "orderPaymentType",
-        "displayName": "Payment Type",
-        "simpleValueType": true,
-        "help": "Payment method (e.g., PAYPAL, PREPAYMENT)."
-      },
-      {
-        "type": "TEXT",
-        "name": "orderEstDeliveryDate",
-        "displayName": "Est. Delivery Date (optional)",
-        "simpleValueType": true,
-        "help": "Format: YYYY-MM-DD."
-      }
-    ],
-    "enablingConditions": [
-      {
-        "paramName": "actionType",
-        "paramValue": "shopReviews",
-        "type": "EQUALS"
-      },
-      {
-        "paramName": "actionType",
-        "paramValue": "shopProductReviews",
-        "type": "EQUALS"
-      }
-    ]
-  },
-  {
-    "type": "GROUP",
-    "name": "productData",
-    "displayName": "Product Data",
-    "groupStyle": "ZIPPY_OPEN",
-    "subParams": [
-      {
-        "type": "TEXT",
-        "name": "productsVariable",
-        "displayName": "Products Variable",
-        "simpleValueType": true,
-        "help": "A GTM variable that returns an array of product objects. Each object should have: url, imageUrl, name, sku, and optionally gtin, mpn, brand."
-      }
-    ],
-    "enablingConditions": [
-      {
-        "paramName": "actionType",
-        "paramValue": "shopProductReviews",
-        "type": "EQUALS"
       }
     ]
   },
@@ -272,11 +123,8 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 var log = require('logToConsole');
 var injectScript = require('injectScript');
-var copyFromWindow = require('copyFromWindow');
 var setInWindow = require('setInWindow');
-var callInWindow = require('callInWindow');
 var makeString = require('makeString');
-var getType = require('getType');
 
 var enableDebug = data.debug;
 var debugLog = function(msg) {
@@ -284,114 +132,31 @@ var debugLog = function(msg) {
 };
 
 var tsId = makeString(data.trustedshopsId);
-var actionType = data.actionType;
 
-debugLog('Action: ' + actionType + ', TSID: ' + tsId);
+debugLog('Loading Trustbadge for TSID: ' + tsId);
 
-// HTML escape helper
-var escapeHtml = function(str) {
-  if (!str) return '';
-  str = makeString(str);
-  var result = '';
-  for (var i = 0; i < str.length; i++) {
-    var ch = str.charAt(i);
-    if (ch === '&') result = result + '&amp;';
-    else if (ch === '<') result = result + '&lt;';
-    else if (ch === '>') result = result + '&gt;';
-    else if (ch === '"') result = result + '&quot;';
-    else result = result + ch;
-  }
-  return result;
+// Build _tsConfig from badge settings
+var tsConfig = {
+  'yOffset': makeString(data.badgeYOffset || '0'),
+  'variant': makeString(data.badgeVariant || 'reviews'),
+  'customElementId': makeString(data.customElementId || ''),
+  'trustcardDirection': makeString(data.trustcardDirection || ''),
+  'disableResponsive': 'false',
+  'disableTrustbadge': 'false'
 };
 
-if (actionType === 'placeBadge') {
-  // Build _tsConfig
-  var tsConfig = {
-    'yOffset': makeString(data.badgeYOffset || '0'),
-    'variant': makeString(data.badgeVariant || 'reviews'),
-    'customElementId': makeString(data.customElementId || ''),
-    'trustcardDirection': makeString(data.trustcardDirection || ''),
-    'disableResponsive': 'false',
-    'disableTrustbadge': 'false'
-  };
+setInWindow('_tsConfig', tsConfig, true);
+debugLog('Set _tsConfig');
 
-  setInWindow('_tsConfig', tsConfig, true);
-  debugLog('Set _tsConfig');
+var scriptUrl = 'https://widgets.trustedshops.com/js/' + tsId + '.js';
 
-  var scriptUrl = 'https://widgets.trustedshops.com/js/' + tsId + '.js';
-
-  injectScript(scriptUrl, function() {
-    debugLog('Trustbadge script loaded');
-    data.gtmOnSuccess();
-  }, function() {
-    debugLog('Trustbadge script failed to load');
-    data.gtmOnFailure();
-  }, 'trustedShopsBadge_' + tsId);
-
-} else if (actionType === 'shopReviews' || actionType === 'shopProductReviews') {
-  // Build checkout DIV HTML
-  var html = '';
-  html = html + '<span id="tsCheckoutOrderNr">' + escapeHtml(data.orderNumber) + '</span>';
-  html = html + '<span id="tsCheckoutBuyerEmail">' + escapeHtml(data.buyerEmail) + '</span>';
-  html = html + '<span id="tsCheckoutOrderAmount">' + escapeHtml(data.orderAmount) + '</span>';
-  html = html + '<span id="tsCheckoutOrderCurrency">' + escapeHtml(data.orderCurrency) + '</span>';
-  html = html + '<span id="tsCheckoutOrderPaymentType">' + escapeHtml(data.orderPaymentType) + '</span>';
-
-  if (data.orderEstDeliveryDate) {
-    html = html + '<span id="tsCheckoutOrderEstDeliveryDate">' + escapeHtml(data.orderEstDeliveryDate) + '</span>';
-  }
-
-  // Add product data if collecting product reviews
-  if (actionType === 'shopProductReviews' && data.productsVariable) {
-    var products = data.productsVariable;
-    if (getType(products) === 'array') {
-      for (var i = 0; i < products.length; i++) {
-        var p = products[i];
-        html = html + '<span class="tsCheckoutProductItem">';
-        if (p.url) html = html + '<span class="tsCheckoutProductUrl">' + escapeHtml(p.url) + '</span>';
-        if (p.imageUrl) html = html + '<span class="tsCheckoutProductImageUrl">' + escapeHtml(p.imageUrl) + '</span>';
-        if (p.name) html = html + '<span class="tsCheckoutProductName">' + escapeHtml(p.name) + '</span>';
-        if (p.sku) html = html + '<span class="tsCheckoutProductSKU">' + escapeHtml(p.sku) + '</span>';
-        if (p.gtin) html = html + '<span class="tsCheckoutProductGTIN">' + escapeHtml(p.gtin) + '</span>';
-        if (p.mpn) html = html + '<span class="tsCheckoutProductMPN">' + escapeHtml(p.mpn) + '</span>';
-        if (p.brand) html = html + '<span class="tsCheckoutProductBrand">' + escapeHtml(p.brand) + '</span>';
-        html = html + '</span>';
-      }
-    }
-  }
-
-  debugLog('Checkout HTML built');
-
-  // Store checkout HTML in window for the inline script to read
-  setInWindow('__tsCheckoutHtml', html, true);
-
-  // Inject an inline script via data: URI to create the checkout DIV
-  // GTM sandbox cannot access document.* directly, so we use injectScript
-  // with a data: URI that runs in the page context
-  var encodeUriComponent = require('encodeUriComponent');
-  var helperCode = 'var e=document.getElementById("trustedShopsCheckout");if(e)e.parentNode.removeChild(e);var d=document.createElement("div");d.id="trustedShopsCheckout";d.style.display="none";d.innerHTML=window.__tsCheckoutHtml||"";document.body.appendChild(d);delete window.__tsCheckoutHtml;';
-  var dataUri = 'data:text/javascript,' + encodeUriComponent(helperCode);
-
-  injectScript(dataUri, function() {
-    debugLog('Checkout DIV appended to DOM');
-
-    // Reinitialize Trustbadge if already loaded
-    var tb = copyFromWindow('trustbadge');
-    if (tb) {
-      callInWindow('trustbadge.remove');
-      callInWindow('trustbadge.reInitialize');
-      debugLog('Trustbadge reinitialized');
-    }
-
-    data.gtmOnSuccess();
-  }, function() {
-    debugLog('Failed to create checkout DIV');
-    data.gtmOnFailure();
-  }, 'tsCheckoutDiv');
-} else {
-  debugLog('Unknown action type');
+injectScript(scriptUrl, function() {
+  debugLog('Trustbadge script loaded');
+  data.gtmOnSuccess();
+}, function() {
+  debugLog('Trustbadge script failed to load');
   data.gtmOnFailure();
-}
+}, 'trustedShopsBadge_' + tsId);
 
 
 ___WEB_PERMISSIONS___
@@ -412,10 +177,6 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://widgets.trustedshops.com/js/*"
-              },
-              {
-                "type": 1,
-                "string": "data:text/javascript*"
               }
             ]
           }
@@ -476,153 +237,6 @@ ___WEB_PERMISSIONS___
                     "type": 8,
                     "boolean": false
                   }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "trustbadge"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "trustbadge.remove"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "trustbadge.reInitialize"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  { "type": 1, "string": "key" },
-                  { "type": 1, "string": "read" },
-                  { "type": 1, "string": "write" },
-                  { "type": 1, "string": "execute" }
-                ],
-                "mapValue": [
-                  { "type": 1, "string": "__tsCheckoutHtml" },
-                  { "type": 8, "boolean": false },
-                  { "type": 8, "boolean": true },
-                  { "type": 8, "boolean": false }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  { "type": 1, "string": "key" },
-                  { "type": 1, "string": "read" },
-                  { "type": 1, "string": "write" },
-                  { "type": 1, "string": "execute" }
-                ],
-                "mapValue": [
-                  { "type": 1, "string": "__tsCreateCheckoutDiv" },
-                  { "type": 8, "boolean": false },
-                  { "type": 8, "boolean": true },
-                  { "type": 8, "boolean": true }
                 ]
               }
             ]
