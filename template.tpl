@@ -362,37 +362,32 @@ if (actionType === 'placeBadge') {
 
   debugLog('Checkout HTML built');
 
-  // Store checkout HTML in window for the helper to pick up
+  // Store checkout HTML in window for the inline script to read
   setInWindow('__tsCheckoutHtml', html, true);
 
-  // Define a helper function in window that creates the checkout DIV
-  // This avoids direct document.* access in sandboxed JS permissions
-  setInWindow('__tsCreateCheckoutDiv', function() {
-    var existing = document.getElementById('trustedShopsCheckout');
-    if (existing) existing.parentNode.removeChild(existing);
-    var div = document.createElement('div');
-    div.id = 'trustedShopsCheckout';
-    div.style.display = 'none';
-    div.innerHTML = window.__tsCheckoutHtml || '';
-    document.body.appendChild(div);
-    delete window.__tsCheckoutHtml;
-    delete window.__tsCreateCheckoutDiv;
-  }, true);
+  // Inject an inline script via data: URI to create the checkout DIV
+  // GTM sandbox cannot access document.* directly, so we use injectScript
+  // with a data: URI that runs in the page context
+  var encodeUriComponent = require('encodeUriComponent');
+  var helperCode = 'var e=document.getElementById("trustedShopsCheckout");if(e)e.parentNode.removeChild(e);var d=document.createElement("div");d.id="trustedShopsCheckout";d.style.display="none";d.innerHTML=window.__tsCheckoutHtml||"";document.body.appendChild(d);delete window.__tsCheckoutHtml;';
+  var dataUri = 'data:text/javascript,' + encodeUriComponent(helperCode);
 
-  // Execute the helper
-  callInWindow('__tsCreateCheckoutDiv');
+  injectScript(dataUri, function() {
+    debugLog('Checkout DIV appended to DOM');
 
-  debugLog('Checkout DIV appended to DOM');
+    // Reinitialize Trustbadge if already loaded
+    var tb = copyFromWindow('trustbadge');
+    if (tb) {
+      callInWindow('trustbadge.remove');
+      callInWindow('trustbadge.reInitialize');
+      debugLog('Trustbadge reinitialized');
+    }
 
-  // Reinitialize Trustbadge if already loaded
-  var tb = copyFromWindow('trustbadge');
-  if (tb) {
-    callInWindow('trustbadge.remove');
-    callInWindow('trustbadge.reInitialize');
-    debugLog('Trustbadge reinitialized');
-  }
-
-  data.gtmOnSuccess();
+    data.gtmOnSuccess();
+  }, function() {
+    debugLog('Failed to create checkout DIV');
+    data.gtmOnFailure();
+  }, 'tsCheckoutDiv');
 } else {
   debugLog('Unknown action type');
   data.gtmOnFailure();
@@ -417,6 +412,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://widgets.trustedshops.com/js/*"
+              },
+              {
+                "type": 1,
+                "string": "data:text/javascript*"
               }
             ]
           }
