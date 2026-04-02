@@ -2,7 +2,7 @@
 
 Integrate the Trusted Shops Trustbadge and collect shop and product reviews via Google Tag Manager — without writing Custom HTML tags.
 
-Developed by [New North Digital](https://newnorth.digital).
+Developed by [New North Digital](https://newnorth.digital?utm_source=github&utm_medium=gtm-template&utm_campaign=trusted-shops-web-tag).
 
 ## Features
 
@@ -77,7 +77,7 @@ When collecting product reviews, provide a GTM variable returning an array of pr
 
 ## Author
 
-Created by [New North Digital](https://newnorth.digital)
+Created by [New North Digital](https://newnorth.digital?utm_source=github&utm_medium=gtm-template&utm_campaign=trusted-shops-web-tag)
 
 ## License
 
